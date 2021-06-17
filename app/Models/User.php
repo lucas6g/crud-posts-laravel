@@ -40,4 +40,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * @var mixed
+     */
+    private $name;
+    /**
+     * @var mixed
+     */
+    private $email;
+    /**
+     * @var mixed
+     */
+    private $password;
+
+
+
 }
