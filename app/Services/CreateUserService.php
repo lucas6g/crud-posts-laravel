@@ -20,7 +20,6 @@
             $this->hashProvider = $hashProvider;
         }
 
-
         /**
          * @throws AppError
          */
@@ -33,7 +32,6 @@
             }
 
             $hashedPassword = $this->hashProvider->generateHash($password);
-
             return  $this->userRepository->create($name,$email,$hashedPassword);
 
         }
