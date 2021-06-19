@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Services\AuthenticateUserService;
 use App\Exceptions\AppError;
+use Illuminate\Support\Facades\Validator;
 
 
 class AuthController extends Controller
@@ -20,15 +21,23 @@ class AuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
-        $email = $request->input("email");
-        $password = $request->input("password");
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["errors" => $validator->errors()], 422);
+        }
+
+        $validatedData = $validator->validated();
 
         $authenticateUser = new AuthenticateUserService(
             new EloquentUserRepository(),
             new JwtTokenServiceProvider()
         );
         try {
-            $userWhitToken = $authenticateUser->execute($email, $password);
+            $userWhitToken = $authenticateUser->execute($validatedData['email'], $validatedData['password']);
 
             return response()->json($userWhitToken, 200);
         } catch (AppError $e) {

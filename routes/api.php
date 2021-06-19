@@ -19,8 +19,8 @@ Route::get('/post', [PostController::class, 'index'])->middleware("requireAuth")
 
 Route::get('/post/{id}/edit', [PostController::class, 'edit'])->middleware("requireAuth");
 
-Route::put('/post/{id}', [PostController::class, 'update'])->middleware("requireAuth");
+Route::put('/post/{id}/update', [PostController::class, 'update'])->middleware("requireAuth");
 
-Route::delete('/post/{id}', [PostController::class, 'delete'])->middleware("requireAuth");
+Route::delete('/post/{id}/delete', [PostController::class, 'delete'])->middleware("requireAuth");
 
 Route::get("/post/me", [ListUserPostsController::class, 'index'])->middleware('requireAuth');

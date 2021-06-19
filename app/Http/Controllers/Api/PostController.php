@@ -12,6 +12,7 @@ use App\Services\UpdatePostService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
 
 class PostController extends Controller
@@ -29,14 +30,25 @@ class PostController extends Controller
     public function create(Request $request): JsonResponse
 
     {
+        //getting the authenticated user id
         $payload = auth("api")->payload();
         $user_id = $payload->get('sub');
-        $title = $request->input("title");
-        $content = $request->input("content");
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["errors" => $validator->errors()], 422);
+        }
+
+        $validatedData = $validator->validated();
 
         $createPost = new CreatePostService(
             new EloquentPostRepository()
         );
+
         //if theres no image
         $img_url = null;
         $file = null;
@@ -52,7 +64,7 @@ class PostController extends Controller
 
         try {
 
-            $post = $createPost->execute($title, $content, $user_id, $img_url);
+            $post = $createPost->execute($validatedData['title'], $validatedData['content'], $user_id, $img_url);
 
             //if theres  image just store
             $file ? $file->storeAs("/post/image/", $fileName, "s3") : null;
@@ -90,14 +102,22 @@ class PostController extends Controller
         $post_id = $request->route()->parameter("id");
 
 
-        $title = $request->input("title");
-        $content = $request->input("content");
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["errors" => $validator->errors()], 422);
+        }
+
+        $validatedData = $validator->validated();
 
         $editPost = new UpdatePostService(new EloquentPostRepository());
 
         try {
 
-            $post = $editPost->execute($title, $content, $post_id, $user_id);
+            $post = $editPost->execute($validatedData['title'], $validatedData['content'], $post_id, $user_id);
 
             return response()->json($post, 200)->setEncodingOptions(JSON_UNESCAPED_SLASHES);
         } catch (AppError $e) {
@@ -109,7 +129,6 @@ class PostController extends Controller
     public function delete(Request $request)
 
     {
-
         $payload = auth("api")->payload();
         $user_id = $payload->get('sub');
         $post_id = $request->route()->parameter("id");
