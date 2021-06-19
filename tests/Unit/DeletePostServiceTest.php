@@ -15,7 +15,6 @@ class DeletePostServiceTest extends TestCase
 {
     protected $createPost;
     protected $createUser;
-    protected $delete;
     protected $deletePost;
 
 
@@ -44,7 +43,7 @@ class DeletePostServiceTest extends TestCase
         $post->id = 15;
 
 
-       $this->delete->execute($post);
+         $this->deletePost->execute($post->id,$post->user_id);
 
 
 
