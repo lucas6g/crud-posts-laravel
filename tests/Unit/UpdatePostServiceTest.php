@@ -1,5 +1,6 @@
 <?php
-namespace  Tests\Unit;
+
+namespace Tests\Unit;
 
 use App\Services\CreatePostService;
 use App\Services\CreateUserService;
@@ -16,7 +17,6 @@ class UpdatePostServiceTest extends TestCase
     protected $createPost;
     protected $createUser;
     protected $updatePost;
-
 
 
     public function setUp(): void
@@ -37,14 +37,14 @@ class UpdatePostServiceTest extends TestCase
     public function testUpdatePost()
     {
 
-        $user = $this->createUser->execute("anyName","anyEmail","anyPassword");
+        $user = $this->createUser->execute("anyName", "anyEmail", "anyPassword");
         $user->id = 10;
 
-        $post = $this->createPost->execute("anyTitle","anyContent",$user->id,"anyuserUrl");
+        $post = $this->createPost->execute("anyTitle", "anyContent", $user->id, "anyuserUrl");
         $post->id = 15;
 
 
-        $updatedPost = $this->updatePost->execute("new post title","new post content",$post->id,$user->id);
+        $updatedPost = $this->updatePost->execute("new post title", "new post content", $post->id, $user->id);
 
         $this->assertEquals("new post title", $updatedPost->title);
         $this->assertEquals("new post content", $updatedPost->content);

@@ -1,5 +1,6 @@
 <?php
-namespace  Tests\Unit;
+
+namespace Tests\Unit;
 
 use App\Services\CreatePostService;
 use App\Services\CreateUserService;
@@ -36,15 +37,14 @@ class DeletePostServiceTest extends TestCase
     public function testDeletePost()
     {
 
-        $user = $this->createUser->execute("anyName","anyEmail","anyPassword");
+        $user = $this->createUser->execute("anyName", "anyEmail", "anyPassword");
         $user->id = 10;
 
-        $post = $this->createPost->execute("anyTitle","anyContent",$user->id,"anyImageUrl");
+        $post = $this->createPost->execute("anyTitle", "anyContent", $user->id, "anyImageUrl");
         $post->id = 15;
 
 
-         $this->deletePost->execute($post->id,$post->user_id);
-
+        $this->deletePost->execute($post->id, $post->user_id);
 
 
     }

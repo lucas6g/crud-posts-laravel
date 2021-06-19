@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 
@@ -6,7 +7,8 @@ use App\Exceptions\AppError;
 
 use App\Protocols\Repositories\PostRepositoryProtocol;
 
-class DeletePostService{
+class DeletePostService
+{
     private $postRepository;
 
     public function __construct(PostRepositoryProtocol $postRepository)
@@ -18,12 +20,12 @@ class DeletePostService{
     /**
      * @throws AppError
      */
-    public function execute($post_id,$user_id)
+    public function execute($post_id, $user_id)
     {
-        $post = $this->postRepository->findById($post_id,$user_id);
+        $post = $this->postRepository->findById($post_id, $user_id);
 
-        if(!$post){
-            throw new AppError("post not found",404);
+        if (!$post) {
+            throw new AppError("post not found", 404);
         }
 
         $this->postRepository->delete($post);

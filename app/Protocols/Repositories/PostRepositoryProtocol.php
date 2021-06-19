@@ -10,6 +10,7 @@ interface PostRepositoryProtocol{
     function findById($post_id,$user_id):?Post;
     function  update(Post $post):?Post;
     function delete(Post $post):void;
+    function  findAll($user_id):iterable;
 
 
 }

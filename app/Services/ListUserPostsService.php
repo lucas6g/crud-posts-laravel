@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Protocols\Repositories\PostRepositoryProtocol;
 
-class ListPostsService
+class ListUserPostsService
 {
 
     private $postRepository;
@@ -14,9 +14,9 @@ class ListPostsService
         $this->postRepository = $postRepository;
     }
 
-    public function execute(): iterable
+    public function execute($user_id): iterable
     {
-        return $this->postRepository->all();
+        return $this->postRepository->findAll($user_id);
 
     }
 

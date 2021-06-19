@@ -21,22 +21,23 @@ class AuthenticateUserServiceTest extends TestCase
     {
         $fakeUserRepository = new FakeUserRepository();
         $this->createUser = new CreateUserService(
-          $fakeUserRepository,
-          new FakeHashProvider()
+            $fakeUserRepository,
+            new FakeHashProvider()
         );
         $this->authenticateUser = new AuthenticateUserService(
-           $fakeUserRepository,
+            $fakeUserRepository,
             new FakeJwtTokenProvider()
         );
     }
+
     /**
      * @throws AppError
      */
     public function testAuthenticateUser()
     {
-        $user = $this->createUser->execute("anyName","anyEmail","anyPassword");
-        $response = $this->authenticateUser->execute($user->email,$user->password);
-        $this->assertObjectHasAttribute("token",$response);
+        $user = $this->createUser->execute("anyName", "anyEmail", "anyPassword");
+        $response = $this->authenticateUser->execute($user->email, $user->password);
+        $this->assertObjectHasAttribute("token", $response);
 
     }
 
@@ -47,15 +48,15 @@ class AuthenticateUserServiceTest extends TestCase
     {
         $wrongPassword = "wrongPassword";
         $this->expectException(AppError::class);
-        $user = $this->createUser->execute("anyName","anyEmail","anyPassword");
-        $this->authenticateUser->execute($user->email,$wrongPassword);
+        $user = $this->createUser->execute("anyName", "anyEmail", "anyPassword");
+        $this->authenticateUser->execute($user->email, $wrongPassword);
 
     }
 
     public function testNotAuthenticateUserIfItDoesNotExits()
     {
         $this->expectException(AppError::class);
-        $this->authenticateUser->execute("anyEmail","anyPassword");
+        $this->authenticateUser->execute("anyEmail", "anyPassword");
     }
 
 }

@@ -22,6 +22,7 @@ class CreateUserServiceTest extends TestCase
             new FakeHashProvider()
         );
     }
+
     /**
      * @throws AppError
      */
@@ -29,20 +30,22 @@ class CreateUserServiceTest extends TestCase
     {
 
 
-       $user = $this->createUser->execute("anyName","anyEmail","anyPassword");
-       $this->assertEquals("anyName", $user->name);
+        $user = $this->createUser->execute("anyName", "anyEmail", "anyPassword");
+        $this->assertEquals("anyName", $user->name);
 
 
     }
+
     /**
      * @throws AppError
      */
-    public function testNotCreateUserWhitSameEmail(){
+    public function testNotCreateUserWhitSameEmail()
+    {
         $userEmail = "anyEmail";
 
         $this->expectException(AppError::class);
-        $this->createUser->execute("anyName",$userEmail,"anyPassword");
-        $this->createUser->execute("anyName",$userEmail,"anyPassword");
+        $this->createUser->execute("anyName", $userEmail, "anyPassword");
+        $this->createUser->execute("anyName", $userEmail, "anyPassword");
 
     }
 }

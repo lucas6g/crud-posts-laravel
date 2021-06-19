@@ -1,5 +1,6 @@
 <?php
-namespace  Tests\Unit;
+
+namespace Tests\Unit;
 
 use App\Services\CreatePostService;
 use App\Services\CreateUserService;
@@ -36,12 +37,12 @@ class EditPostServiceTest extends TestCase
     public function testEditPost()
     {
 
-        $user = $this->createUser->execute("anyName","anyEmail","anyPassword");
+        $user = $this->createUser->execute("anyName", "anyEmail", "anyPassword");
         $user->id = 10;
-        $post = $this->createPost->execute("anyTitle","anyContent",$user->id,"anyuserUrl");
+        $post = $this->createPost->execute("anyTitle", "anyContent", $user->id, "anyuserUrl");
         $post->id = 15;
 
-        $postData = $this->editPost->execute($post->id,$user->id);
+        $postData = $this->editPost->execute($post->id, $user->id);
         $this->assertEquals($post->id, $postData->id);
         $this->assertEquals($post->user_id, $postData->user_id);
     }

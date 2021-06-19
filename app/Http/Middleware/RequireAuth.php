@@ -15,7 +15,7 @@
             JWTAuth::parseToken()->authenticate();
 
             } catch (JWTException $exception) {
-                return response()->json(['error' => "invalid token"],400);
+                return response()->json(['error' => "you most be login"],400);
             }
             return $next($request);
 

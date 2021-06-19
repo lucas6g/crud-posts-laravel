@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\AppError;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Providers\HashServiceProvider;
 use App\Repositories\EloquentUserRepository;
 use App\Services\CreateUserService;
@@ -16,17 +15,12 @@ use Illuminate\Http\JsonResponse;
 class UserController extends Controller
 {
 
-    public function show()
-    {
-        return User::all();
-    }
-
-
     public function create(Request $request ) :JsonResponse
     {
         $name = $request->input("name");
         $email = $request->input("email");
         $password = $request->input("password");
+
 
         $createUser = new CreateUserService(
             new EloquentUserRepository(),
