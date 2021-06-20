@@ -15,7 +15,35 @@ use Illuminate\Support\Facades\Input;
 
 
 class UserController extends Controller
+
 {
+
+    /**
+     * @OA\Post(
+     * path="/login",
+     * summary="Sign in",
+     * description="Login by email, password",
+     * operationId="authLogin",
+     * tags={"auth"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass user credentials",
+     *    @OA\JsonContent(
+     *       required={"email","password"},
+     *       @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *       @OA\Property(property="persistent", type="boolean", example="true"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Wrong credentials response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+     *        )
+     *     )
+     * )
+     */
 
 
     public function create(Request $request): JsonResponse
@@ -42,7 +70,7 @@ class UserController extends Controller
         try {
             $user = $createUser->execute($validatedData['name'], $validatedData['email'], $validatedData['password']);
 
-            return response()->json(["user" => $user], 201);
+            return response()->json($user, 201);
 
         } catch (AppError $e) {
             return response()->json(["error" => $e->message], $e->code);
