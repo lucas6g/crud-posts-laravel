@@ -18,44 +18,6 @@ class UserController extends Controller
 
 {
 
-    /**
-     *
-     *
-     * @OA\Post(path="api/user",
-     *   tags={"user"},
-     *   summary="Create user",
-     *   description="This can only be done by any user",
-     *   @OA\RequestBody(
-     *       required=true,
-     *      @OA\JsonContent(
-     *      type="object",
-     *      @OA\Property(property="name",type="string"),
-     *      @OA\Property(property="email",type="string"),
-     *      @OA\Property(property="password",type="string"),
-     *      )
-     *   ),
-     *    @OA\Response(
-     *     response="201",
-     *      description="Succsses",
-     *     @OA\MediaType(mediaType="application/json",
-     *
-     *    @OA\Examples(
-     *        summary="created user",
-     *        example = "created user",
-     *       value = {
-     *              "name": "string",
-     *              "email": "string",
-     *             "id" : "integer",
-     *              "created_at":"date",
-     *              "updated_at":"date"
-     *         },
-     *      )
-     * ),
-     *
-     * ),
-     *
-     * )
-     */
     public function create(Request $request): JsonResponse
     {
 
