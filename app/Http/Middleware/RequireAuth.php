@@ -9,6 +9,8 @@
     use Tymon\JWTAuth\Facades\JWTAuth;
 
 
+    //midleware for handle jwt validation
+
     class RequireAuth extends BaseMiddleware {
         public function handle(Request $request,Closure $next){
             try {

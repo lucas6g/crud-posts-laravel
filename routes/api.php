@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\ListUserPostsController;
 use App\Http\Controllers\Api\PostController;
 
 
+
+
 Route::post('/user', [UserController::class, 'create']);
 
 Route::post('/session', [AuthController::class, 'login']);
