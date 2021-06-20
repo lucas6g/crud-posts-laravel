@@ -14,10 +14,43 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+
     /**
-     * Get a JWT via given credentials.
      *
-     * @return JsonResponse
+     *
+     * @OA\Post(path="api/session",
+     *   tags={"user"},
+     *   summary="Create user session",
+     *   description="",
+     *   @OA\RequestBody(
+     *       required=true,
+     *      @OA\JsonContent(
+     *      type="object",
+     *      @OA\Property(property="email",type="string"),
+     *      @OA\Property(property="password",type="string"),
+     *      )
+     *   ),
+     *    @OA\Response(
+     *     response="200",
+     *      description="Succsess",
+     *     @OA\MediaType(mediaType="application/json",
+     *
+     *    @OA\Examples(
+     *        summary="autenticated user",
+     *        example = "created user",
+     *       value = {
+     *                  "id": "integer",
+     *              "token" :"string",
+     *              "name": "string",
+     *
+     *         },
+     *      )
+     * ),
+     *
+     * ),
+     *
+     * )
      */
     public function login(Request $request): JsonResponse
     {

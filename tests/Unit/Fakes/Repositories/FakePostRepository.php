@@ -64,6 +64,20 @@ class FakePostRepository implements PostRepositoryProtocol
 
     }
 
+    public function findAll($user_id): iterable
+    {
+        $userArray = [];
+
+        foreach ($this->posts as $post) {
+            if ($post->user_id === $user_id) {
+                array_push($userArray, $post);
+
+            }
+        }
+
+        return $userArray;
+    }
+
 
 }
 

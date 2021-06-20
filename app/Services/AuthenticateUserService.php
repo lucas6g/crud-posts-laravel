@@ -34,7 +34,10 @@ class AuthenticateUserService
         if (!$user) {
             throw new AppError('invalid email or password combination', 401);
         }
+
+
         $token = $this->jwtTokenProvider->generateToken($email, $password);
+
 
         if (!$token) {
             throw new AppError('invalid email or password combination', 401);

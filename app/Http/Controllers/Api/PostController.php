@@ -18,6 +18,22 @@ use Ramsey\Uuid\Uuid;
 class PostController extends Controller
 {
 
+    /**
+     * @OA\Get(
+     *
+     *     path="/api/post",
+     *      tags={"post"},
+     *     summary="Get all posts",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *     response="200",
+     *      description="Succsses",
+
+     *
+     *   )
+     * )
+     */
+
     public function index(): JsonResponse
     {
         $listPosts = new ListPostsService(new EloquentPostRepository());
@@ -27,6 +43,34 @@ class PostController extends Controller
         return response()->json($posts, 200)->setEncodingOptions(JSON_UNESCAPED_SLASHES);
     }
 
+
+    /**
+     *
+     * @OA\Post(path="api/post",
+     *   tags={"post"},
+     *   summary="Create post",
+     *   description="This can only be done by any authenticated users",
+     *
+     *   @OA\RequestBody(
+     *       required=true,
+     *      @OA\JsonContent(
+     *      type="object",
+     *      @OA\Property(property="title",type="string"),
+     *      @OA\Property(property="content",type="string"),
+     *      )
+     *   ),
+     *    @OA\Response(
+     *     response="201",
+     *      description="Succsses",
+     *     @OA\MediaType(mediaType="application/json",
+     *
+     *
+     * ),
+     *
+     * ),
+     *
+     * )
+     */
     public function create(Request $request): JsonResponse
 
     {
@@ -75,7 +119,6 @@ class PostController extends Controller
             return response()->json(["error" => $e->message], $e->code);
         }
     }
-
     public function edit(Request $request)
     {
         $editPost = new EditPostService(new EloquentPostRepository());

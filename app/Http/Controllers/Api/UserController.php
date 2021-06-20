@@ -11,7 +11,7 @@ use App\Services\CreateUserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Input;
+
 
 
 class UserController extends Controller
@@ -19,35 +19,46 @@ class UserController extends Controller
 {
 
     /**
-     * @OA\Post(
-     * path="/login",
-     * summary="Sign in",
-     * description="Login by email, password",
-     * operationId="authLogin",
-     * tags={"auth"},
-     * @OA\RequestBody(
-     *    required=true,
-     *    description="Pass user credentials",
-     *    @OA\JsonContent(
-     *       required={"email","password"},
-     *       @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
-     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
-     *       @OA\Property(property="persistent", type="boolean", example="true"),
-     *    ),
+     *
+     *
+     * @OA\Post(path="api/user",
+     *   tags={"user"},
+     *   summary="Create user",
+     *   description="This can only be done by any user",
+     *   @OA\RequestBody(
+     *       required=true,
+     *      @OA\JsonContent(
+     *      type="object",
+     *      @OA\Property(property="name",type="string"),
+     *      @OA\Property(property="email",type="string"),
+     *      @OA\Property(property="password",type="string"),
+     *      )
+     *   ),
+     *    @OA\Response(
+     *     response="201",
+     *      description="Succsses",
+     *     @OA\MediaType(mediaType="application/json",
+     *
+     *    @OA\Examples(
+     *        summary="created user",
+     *        example = "created user",
+     *       value = {
+     *              "name": "string",
+     *              "email": "string",
+     *             "id" : "integer",
+     *              "created_at":"date",
+     *              "updated_at":"date"
+     *         },
+     *      )
      * ),
-     * @OA\Response(
-     *    response=422,
-     *    description="Wrong credentials response",
-     *    @OA\JsonContent(
-     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
-     *        )
-     *     )
+     *
+     * ),
+     *
      * )
      */
-
-
     public function create(Request $request): JsonResponse
     {
+
 
         //validating request data
         $validator = Validator::make($request->all(), [
@@ -71,10 +82,8 @@ class UserController extends Controller
             $user = $createUser->execute($validatedData['name'], $validatedData['email'], $validatedData['password']);
 
             return response()->json($user, 201);
-
         } catch (AppError $e) {
             return response()->json(["error" => $e->message], $e->code);
         }
-
     }
 }

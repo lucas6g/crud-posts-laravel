@@ -1,0 +1,166 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Parlador Ideal",
+        "version": "0.1"
+    },
+    "paths": {
+        "api/session": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Create user session",
+                "description": "",
+                "operationId": "App\\Http\\Controllers\\Api\\AuthController::login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succsess",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "created user": {
+                                        "summary": "autenticated user",
+                                        "value": {
+                                            "id": "integer",
+                                            "token": "string",
+                                            "name": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/post": {
+            "get": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "Get all posts",
+                "operationId": "App\\Http\\Controllers\\Api\\PostController::index",
+                "responses": {
+                    "200": {
+                        "description": "Succsses"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "api/post": {
+            "post": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "Create post",
+                "description": "This can only be done by any authenticated users",
+                "operationId": "App\\Http\\Controllers\\Api\\PostController::create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Succsses",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "api/user": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Create user",
+                "description": "This can only be done by any user",
+                "operationId": "App\\Http\\Controllers\\Api\\UserController::create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Succsses",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "created user": {
+                                        "summary": "created user",
+                                        "value": {
+                                            "name": "string",
+                                            "email": "string",
+                                            "id": "integer",
+                                            "created_at": "date",
+                                            "updated_at": "date"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
