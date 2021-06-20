@@ -1,6 +1,6 @@
-# ![Parlador Ideal Api](logo.jpg)
+# Parlador Ideal
 
-> ### Example of how to run Parlador Ideal  Rest Api.
+> ### Example of how to run Parlador Ideal  an api rest for de mobile app at repo.(https://github.com/lucas6g/parlador-ideal-mobile)
 
 ----------
 
