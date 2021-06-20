@@ -1,62 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# ![Parlador Ideal Api](logo.jpg)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> ### Example of how to run Parlador Ideal  API.
 
-## About Laravel
+----------
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Getting started
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Please check the official laravel installation guide for server requirements before you start. [Official Documentation](https://laravel.com/docs/8.x/installation)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Make sure you have all the necessary requirements to run a laravel project
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Clone the repository
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    git clone github.com/lucas6g/parlador-ideal-backend
 
-## Laravel Sponsors
+Switch to the repo folder
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    cd laravel-realworld-example-app
 
-### Premium Partners
+Install all the dependencies using composer
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+    composer install
 
-## Contributing
+Copy the example env file and make the required configuration changes in the .env file
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    cp .env.example .env
 
-## Code of Conduct
+Generate a new application key
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    php artisan key:generate
 
-## Security Vulnerabilities
+Generate a new JWT authentication secret key
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    php artisan jwt:generate
 
-## License
+Run the database migrations (**Set the database connection in .env before migrating**)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    php artisan migrate
+
+Start the local development server
+
+    php artisan serve
+
+You can now access the server at http://localhost:8000
+
+
+**Make sure you set the correct database connection information before running the migrations** [Environment variables](#environment-variables)
+
+    php artisan migrate
+
+    php artisan serve
+
+## Database seeding
+
+Run the database seeder and you're done
+
+    php artisan db:seed
+
+***Note*** : It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running the following command
+
+    php artisan migrate:refresh
+
+The api can be accessed at [http://localhost:8000/api](http://localhost:8000/api).
+
+
+
+
+More information regarding the project can be found here https://github.com/gothinkster/realworld
+
+----------
+
+# Code overview
+
+## Dependencies
+
+- [jwt-auth](https://github.com/tymondesigns/jwt-auth) - For authentication using JSON Web Tokens
+- [laravel-cors](https://github.com/barryvdh/laravel-cors) - For handling Cross-Origin Resource Sharing (CORS)
+-[league/flysystem-aws-s3-v3](https://packagist.org/packages/league/flysystem-aws-s3-v3) -For handling Aws s3 image Upload  
+
+## Folders
+
+- `app/Models` - Contains all the Eloquent models
+- `app/Http/Controllers/Api` - Contains all the api controllers
+- `app/Http/Middleware` - Contains the JWT auth middleware
+- `app/Protocols/Repositories` - Contains repository pattern interfaces
+- `app/Protocols/Providers` - Contains services providers interfaces
+- `app/Providers` - Contains Services Providers
+-  `app/Repositories` - Contains Orm Repositories
+-  `app/Services` - Contains Services to handle Business Logic Application
+- `config` - Contains all the application configuration files
+- `database/factories` - Contains the model factory for all the models
+- `database/migrations` - Contains all the database migrations
+- `database/seeds` - Contains the database seeder
+- `routes` - Contains all the api routes defined in api.php file
+- `tests` - Contains all the application tests
+- `tests/Unit` - Contains all the api unit tests
+
+## Environment variables
+
+- `.env` - Environment variables can be set in this file
+
+***Note*** : You can quickly set the database information and other variables in this file and have the application fully working.
+
+----------
+
+# Testing API
+
+Run the laravel test to run all unit tests 
+
+    php artisan test
+
+---------
+
+# Authentication
+
+This applications uses JSON Web Token (JWT) to handle authentication. The token is passed with each request using the `Authorization` header with `Token` scheme. The JWT authentication middleware handles the validation and authentication of the token. Please check the following sources to learn more about JWT.
+
+- https://jwt.io/introduction/
+- https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html
+
+----------
+
+# Cross-Origin Resource Sharing (CORS)
+
+This applications has CORS enabled by default on all API endpoints. 
+
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
+- https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+- https://www.w3.org/TR/cors

@@ -11,10 +11,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 
 {
-    /**
-     * @OA\Info(title="Parlador Ideal", version="0.0.1 :(")
-     *
-     */
+
 
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }
